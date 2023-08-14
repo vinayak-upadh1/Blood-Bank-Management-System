@@ -15,8 +15,12 @@ from blood import models as bmodels
 def patient_signup_view(request):
     userForm=forms.PatientUserForm()
     patientForm=forms.PatientForm()
-    mydict={'userForm':userForm,'patientForm':patientForm}
+    mydict={'userForm':userForm,'patientForm':patientForm,"username_not_available":False}
     if request.method=='POST':
+        if User.objects.filter(username=request.POST.get("username")):
+            mydict['username_not_available'] = True
+            return render(request,'patient/patientsignup.html',context=mydict)
+            
         userForm=forms.PatientUserForm(request.POST)
         patientForm=forms.PatientForm(request.POST,request.FILES)
         if userForm.is_valid() and patientForm.is_valid():

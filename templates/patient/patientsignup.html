@@ -32,6 +32,9 @@
                     <h2 class="title">Patient Registration</h2>
                 </div>
                 <div class="card-body">
+                    {% if username_not_available %}
+                    <p>This username is not available!!</p>
+                    {% endif %}
                     <form method="POST" autocomplete="off" enctype="multipart/form-data">
                         {% csrf_token %}
 
@@ -144,7 +147,7 @@
                             <div class="name">Photo</div>
                             <div class="value">
                                 <div class="input-group">
-                                    {% render_field patientForm.profile_pic|attr:'required:true'  class="input--style-5"  %}
+                                    {% render_field patientForm.profile_pic|attr:'required:false'  class="input--style-5"  %}
                                 </div>
                             </div>
                         </div>
